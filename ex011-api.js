@@ -13,17 +13,18 @@ let cep = await rl.question('Digite o CEP (somente números): ');
 let dadosCEP = await consultarCEP(cep);
 
 console.log(`\nInformações do CEP ${dadosCEP.cep}:`);
-console.log(`Logradouro: ${dadosCEP.logradouro}`);
+console.log(`Logradouro: ${dadosCEP.logradouro || dadosCEP.street}`);
 console.log(`Complemento: ${dadosCEP.complemento}`);
-console.log(`Bairro: ${dadosCEP.bairro}`);
-console.log(`Localidade: ${dadosCEP.localidade}`);
-console.log(`UF: ${dadosCEP.uf}`);
+console.log(`Bairro: ${dadosCEP.bairro || dadosCEP.neighborhood}`);
+console.log(`Localidade: ${dadosCEP.localidade || dadosCEP.city}`);
+console.log(`UF: ${dadosCEP.uf || dadosCEP.state}`);
 
 rl.close(); // Fecha a interface de leitura de linha para liberar recursos
 
 // Função para consultar o CEP usando a API ViaCEP
 async function consultarCEP(cep){
-    const url = `https://viacep.com.br/ws/${cep}/json/`;
+    // const url = `https://viacep.com.br/ws/${cep}/json/`;
+    const url = `https://brasilapi.com.br/api/cep/v1/${cep}`;
 
     let resultado = await fetch(url)
     let dados = await resultado.json()
